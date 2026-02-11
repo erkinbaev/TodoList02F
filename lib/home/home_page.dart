@@ -68,9 +68,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void navigateToAddTodoPage(BuildContext context) async {
     final result = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AddTodoPage()));
-    // if (result != null) {
+     if (result != null) {
       print("Текст со второго экрана: $result");
-    // }
+     }
   }
 
   @override

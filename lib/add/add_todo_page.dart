@@ -78,6 +78,6 @@ class _AddTodoPage extends State<AddTodoPage> {
     //Закрывать все фоновые задачи
     print("AddTodoPage - dispose");
     _timer.cancel();
-    _textEditingController.clear();
+    _textEditingController.dispose();
   }
 }
