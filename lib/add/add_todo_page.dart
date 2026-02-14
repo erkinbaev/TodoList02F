@@ -35,25 +35,84 @@ class _AddTodoPage extends State<AddTodoPage> {
   @override
   Widget build(BuildContext context) {
     print("AddTodoPage - build");
-    return Scaffold(
-      appBar: AppBar(
-         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Добавить задачу')
-      ),
-      body: Column(
-        children: [
-          SizedBox(height: 50),
-          TextField(
-            controller: _textEditingController,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "Название"
+     return Scaffold(
+      body: SafeArea(
+        child: Padding(padding: const EdgeInsets.symmetric(horizontal: 18),
+        child: Column(
+          children: [
+            const SizedBox(height: 10),
+              const Text(
+                'Новая задача',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(height: 1, color: Colors.black26),
+              const SizedBox(height: 18),
+
+                    TextField(
+                      controller: _textEditingController,
+                        decoration: InputDecoration(
+            hintText: 'Введите текст',
+            filled: true,
+            fillColor: const Color(0xFFEDEDED), // серый фон
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 14,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: Colors.black,
+                width: 1.5,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: Colors.black,
+                width: 1.5,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: Colors.black,
+                width: 2,
+              ),
             ),
           ),
-          SizedBox(height: 30),
-          TextButton(onPressed: () => Navigator.of(context).pop(_textEditingController.text), child: Text("Сохранить"))
-        ],
-      ),
+          ),
+           const Spacer(),
+           SizedBox(
+                width: double.infinity,
+                height: 60,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                   () => ();
+                  },
+                  label: const Text(
+                    'Сохранить',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF0A72FF),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    elevation: 0,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16)
+          ],
+        ),
+        ),
+        ),
     );
   }
 
