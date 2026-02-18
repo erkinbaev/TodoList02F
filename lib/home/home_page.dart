@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_list_02/add/add_todo_page.dart';
 import 'package:todo_list_02/database/app_database.dart';
 import 'package:todo_list_02/database/todo_repository.dart';
 import 'package:todo_list_02/home/home_state.dart';
 import 'package:todo_list_02/home/home_view_model.dart';
+import 'package:todo_list_02/settings/settings_page.dart';
 import 'package:todo_list_02/todo.dart';
 import 'todo_tile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,12 +21,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late final HomeCubit cubit;
+  late SharedPreferences preferences;
   
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     
+    _getPreferences();
+
     final db = AppDatabase();
     final repo = TodoRepositoryImpl(db);
     final vm = HomeViewModel(repo: repo);
@@ -61,7 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             children: [
               const SizedBox(height: 10),
-              const Text(
+              Row(children: [
+                const Text(
                 'Мои задачи',
                 style: TextStyle(
                   fontSize: 28,
@@ -69,6 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.black87,
                 ),
               ),
+              Spacer(),
+              IconButton(onPressed: () => _navigateToSettingsPage(context), icon: Icon(Icons.settings))
+              ],),
+              
               const SizedBox(height: 10),
               Container(height: 1, color: Colors.black26),
               const SizedBox(height: 18),
@@ -195,6 +205,14 @@ class _MyHomePageState extends State<MyHomePage> {
      if (result != null) {
       print("Текст со второго экрана: $result");
      }
+  }
+
+  void _navigateToSettingsPage(BuildContext context) async {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SettingsPage()));
+  }
+
+  void _getPreferences() async {
+    preferences = await SharedPreferences.getInstance();
   }
 
   @override
