@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_list_02/add/add_todo_page.dart';
+import 'package:todo_list_02/database/app_database.dart';
 import 'package:todo_list_02/home/home_page.dart';
 
-void main() {
-  runApp(const MyApp());
+late final AppDatabase database;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  database = AppDatabase();
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -35,7 +41,7 @@ class _MyApp extends State<MyApp> {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
-      home: isDarkTheme ? const MyHomePage(title: 'Flutter Demo Home Page') : const AddTodoPage(),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 

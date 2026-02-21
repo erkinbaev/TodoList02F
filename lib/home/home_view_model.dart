@@ -1,7 +1,7 @@
 
+import 'package:todo_list_02/database/app_database.dart';
 import 'package:todo_list_02/database/todo_repository.dart';
 import 'package:todo_list_02/home/home_state.dart';
-import 'package:todo_list_02/todo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 //описываем viewModel

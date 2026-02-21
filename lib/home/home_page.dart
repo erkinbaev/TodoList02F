@@ -6,7 +6,6 @@ import 'package:todo_list_02/database/todo_repository.dart';
 import 'package:todo_list_02/home/home_state.dart';
 import 'package:todo_list_02/home/home_view_model.dart';
 import 'package:todo_list_02/settings/settings_page.dart';
-import 'package:todo_list_02/todo.dart';
 import 'todo_tile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,9 +56,37 @@ class _MyHomePageState extends State<MyHomePage> {
        body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           if (state.isEmpty) {
-            return Center(child: Text("У вас ни одной задачи!"));
+            return Column(
+              children: [
+                SizedBox(height: 150),
+                Text("У вас ни одной задачи!"),
+                Spacer(),
+                SizedBox(
+                width: double.infinity,
+                height: 60,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    _navigateToAddTodoPage(context);
+                  },
+                  icon: const Icon(Icons.add, size: 26),
+                  label: const Text(
+                    'Добавить задачу',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF0A72FF),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    elevation: 0,
+                  ),
+                ),
+              ),
+              SizedBox(height: 50)
+              ],
+            );
           }
-
             return Scaffold(
         body: SafeArea(
           child: Padding(padding: const EdgeInsets.symmetric(horizontal: 18),

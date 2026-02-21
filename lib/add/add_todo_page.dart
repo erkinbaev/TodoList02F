@@ -2,6 +2,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:todo_list_02/database/app_database.dart';
+import 'package:todo_list_02/main.dart';
 
 class AddTodoPage extends StatefulWidget{
   const AddTodoPage({super.key});
@@ -92,7 +94,7 @@ class _AddTodoPage extends State<AddTodoPage> {
                 height: 60,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                   () => ();
+                   database.insertTodo(TodosCompanion.insert(title: _textEditingController.text, date: DateTime.now().toString()));
                   },
                   label: const Text(
                     'Сохранить',
