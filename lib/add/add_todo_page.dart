@@ -93,9 +93,7 @@ class _AddTodoPage extends State<AddTodoPage> {
                 width: double.infinity,
                 height: 60,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                   database.insertTodo(TodosCompanion.insert(title: _textEditingController.text, date: DateTime.now().toString()));
-                  },
+                  onPressed: () => insertTodo(),
                   label: const Text(
                     'Сохранить',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
@@ -116,6 +114,11 @@ class _AddTodoPage extends State<AddTodoPage> {
         ),
         ),
     );
+  }
+
+  Future<void> insertTodo() async {
+    await database.insertTodo(TodosCompanion.insert(title: _textEditingController.text, date: DateTime.now().toString()));
+    Navigator.pop(context, true);
   }
 
   @override

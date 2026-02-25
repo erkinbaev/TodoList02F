@@ -13,13 +13,30 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
+//READ
   Future<List<Todo>> getTodoList() {
     return select(todos).get();
   }
 
+//CREATE
   Future<int> insertTodo(TodosCompanion todo) {
     return into(todos).insert(todo);
   }
+
+  //UPDATE
+  Future<int> updateTodo(int id, TodosCompanion todo) {
+    return (update(todos)..where((t) => t.id.equals(id))).write(todo);
+  }
+
+  //UPDATE
+  Future<int> updateStatus(int id, TodosCompanion todo) {
+    return (update(todos)..where((t) => t.id.equals(id))).write(todo);
+  }
+
+  //DELETE
+  Future<int> deleteTodo(int id) {
+    return (delete(todos)..where((t) => t.id.equals(id))).go();
+  } 
 
 }
 

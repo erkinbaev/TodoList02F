@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_list_02/add/add_todo_page.dart';
 import 'package:todo_list_02/database/app_database.dart';
 import 'package:todo_list_02/database/todo_repository.dart';
+import 'package:todo_list_02/details/todo_detail_page.dart';
 import 'package:todo_list_02/home/home_state.dart';
 import 'package:todo_list_02/home/home_view_model.dart';
 import 'package:todo_list_02/settings/settings_page.dart';
@@ -116,14 +117,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   separatorBuilder: (_, __) => const SizedBox(height: 14),
                   itemBuilder: (context, index) {
                     final todoItem = state.items[index];
-                    return TodoTile(
-                      title: todoItem.title, 
-                      dateText: todoItem.date, 
-                      isDone: todoItem.isDone, 
-                      onChanged: (v) {
-                       // setState(() => todoItem.isFinished = v;
-                      }
-                      );
+                    // return TodoTile(
+                    //   title: todoItem.title, 
+                    //   dateText: todoItem.date, 
+                    //   isDone: todoItem.isDone, 
+                    //   onChanged: (v) {
+                    //    // setState(() => todoItem.isFinished = v;
+                    //   },
+                    //   );
+                    return ListTile(
+                      title: Text(todoItem.title),
+                      onTap: () => _navigateToDetailsPage(context, todoItem)
+                      ,
+                    );
                   },
                 )
                 ),
@@ -160,83 +166,22 @@ class _MyHomePageState extends State<MyHomePage> {
       )
       )
       );
-   
-      //  return Scaffold(
-      //   body: SafeArea(
-      //     child: Padding(padding: const EdgeInsets.symmetric(horizontal: 18),
-      //     child: Column(
-      //       children: [
-      //         const SizedBox(height: 10),
-      //         const Text(
-      //           'Мои задачи',
-      //           style: TextStyle(
-      //             fontSize: 28,
-      //             fontWeight: FontWeight.w600,
-      //             color: Colors.black87,
-      //           ),
-      //         ),
-      //         const SizedBox(height: 10),
-      //         Container(height: 1, color: Colors.black26),
-      //         const SizedBox(height: 18),
-
-      //         Expanded(
-      //           child: ListView.separated(
-      //             itemCount: _todoList.length,
-      //             separatorBuilder: (_, __) => const SizedBox(height: 14),
-      //             itemBuilder: (context, index) {
-      //               final todoItem = _todoList[index];
-      //               return TodoTile(
-      //                 title: todoItem.title, 
-      //                 dateText: todoItem.date, 
-      //                 isDone: todoItem.isDone, 
-      //                 onChanged: (v) {
-      //                  // setState(() => todoItem.isFinished = v;
-      //                 }
-      //                 );
-      //             },
-      //           )
-      //           ),
-      //           const SizedBox(height: 14),
-      //         SizedBox(
-      //           width: double.infinity,
-      //           height: 60,
-      //           child: ElevatedButton.icon(
-      //             onPressed: () {
-      //               _navigateToAddTodoPage(context);
-      //             },
-      //             icon: const Icon(Icons.add, size: 26),
-      //             label: const Text(
-      //               'Добавить задачу',
-      //               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-      //             ),
-      //             style: ElevatedButton.styleFrom(
-      //               backgroundColor: const Color(0xFF0A72FF),
-      //               foregroundColor: Colors.white,
-      //               shape: RoundedRectangleBorder(
-      //                 borderRadius: BorderRadius.circular(16),
-      //               ),
-      //               elevation: 0,
-      //             ),
-      //           ),
-      //         ),
-      //         const SizedBox(height: 16),
-      //       ],
-      //     ),
-      //     )
-      //     ),
-      //  );
   }
 
   void _navigateToAddTodoPage(BuildContext context) async {
-    final result = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AddTodoPage()));
-     if (result != null) {
-      print("Текст со второго экрана: $result");
-     }
+     await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AddTodoPage()));
+    cubit.fetchList();
   }
 
   void _navigateToSettingsPage(BuildContext context) async {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SettingsPage()));
+    await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SettingsPage()));
+    cubit.fetchList();
   }
+
+  void _navigateToDetailsPage(BuildContext context, Todo item)  async {
+     await Navigator.of(context).push(MaterialPageRoute(builder: (_) => TodoDetailPage(item: item)));
+     cubit.fetchList();
+  } 
 
   void _getPreferences() async {
     preferences = await SharedPreferences.getInstance();
